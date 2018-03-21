@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        referenceFireBase.child("pontos").setValue(100);
+        //referenceFireBase.child("pontos").setValue(100);
 
     }
 }
