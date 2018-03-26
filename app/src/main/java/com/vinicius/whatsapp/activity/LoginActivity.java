@@ -10,7 +10,9 @@ import android.widget.EditText;
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
 import com.vinicius.whatsapp.R;
+import com.vinicius.whatsapp.helper.Preferencias;
 
+import java.util.HashMap;
 import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity {
@@ -63,7 +65,15 @@ public class LoginActivity extends AppCompatActivity {
 
                 String token = String.valueOf(numeroRandomico);
 
-                Log.i("TOKEN", "T: " + token);
+                //Log.i("TOKEN", "T: " + token);
+
+                //Salavar os dados para validação
+                Preferencias preferencias = new Preferencias(LoginActivity.this);
+                preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemformatacao, token);
+
+                HashMap<String, String> usuario = preferencias.getDadosUsuario();
+
+                Log.i("TOKEN", "Nome: " + usuario.get("nome") + " Fone: " + usuario.get("telefone"));
 
             }
         });
