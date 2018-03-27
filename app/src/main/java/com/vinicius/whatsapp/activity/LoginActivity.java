@@ -2,6 +2,7 @@ package com.vinicius.whatsapp.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,22 +63,38 @@ public class LoginActivity extends AppCompatActivity {
                 //Gerar token
                 Random randomico = new Random();
                 int numeroRandomico = randomico.nextInt(9999 - 1000) + 1000;
-
                 String token = String.valueOf(numeroRandomico);
-
+                String mensagemEnvio = "WhatsApp Código de Confirmação: " + token;
                 //Log.i("TOKEN", "T: " + token);
+
+                //Telefone do emulador
+                telefoneSemformatacao = "5554";
 
                 //Salavar os dados para validação
                 Preferencias preferencias = new Preferencias(LoginActivity.this);
                 preferencias.salvarUsuarioPreferencias(nomeUsuario, telefoneSemformatacao, token);
 
-                HashMap<String, String> usuario = preferencias.getDadosUsuario();
+                //HashMap<String, String> usuario = preferencias.getDadosUsuario();
+                //Log.i("TOKEN", "Nome: " + usuario.get("nome") + " Fone: " + usuario.get("telefone"));
 
-                Log.i("TOKEN", "Nome: " + usuario.get("nome") + " Fone: " + usuario.get("telefone"));
+                //Envio de SMS
+                boolean enviaSms = enviaSMS("+" + telefoneSemformatacao, mensagemEnvio);
 
             }
         });
-
-
     }
+
+    //Envio SMS
+    private boolean enviaSMS(String telefone, String mensagem){
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage(telefone, null, mensagem, null, null);
+
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
