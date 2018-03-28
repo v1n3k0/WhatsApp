@@ -10,7 +10,9 @@ import android.widget.EditText;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.vinicius.whatsapp.Manifest;
 import com.vinicius.whatsapp.R;
+import com.vinicius.whatsapp.helper.Permissao;
 import com.vinicius.whatsapp.helper.Preferencias;
 
 import java.util.HashMap;
@@ -24,10 +26,19 @@ public class LoginActivity extends AppCompatActivity {
     private EditText codArea;
     private Button cadastrar;
 
+    //Lista de Permissões Necessarias para Activity
+    private String[] permissoesNecessarias = new String[]{
+            android.Manifest.permission.SEND_SMS,
+            android.Manifest.permission.INTERNET
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Perdir Permissões
+        Permissao.validaPermissoes(1, this, permissoesNecessarias);
 
         //Componentes da View
         nome = findViewById(R.id.edit_nome);
@@ -96,5 +107,7 @@ public class LoginActivity extends AppCompatActivity {
             return false;
         }
     }
+
+    
 
 }
