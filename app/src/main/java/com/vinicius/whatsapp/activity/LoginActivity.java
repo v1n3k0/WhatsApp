@@ -1,5 +1,8 @@
 package com.vinicius.whatsapp.activity;
 
+import android.content.DialogInterface;
+import android.content.pm.PackageManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -108,6 +111,30 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults){
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        for (int resultado: grantResults){
+            if(resultado == PackageManager.PERMISSION_DENIED){
+                alertaValidacaoPermissao();
+            }
+        }
+    }
+
+    private void alertaValidacaoPermissao() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Permissões negadas");
+        builder.setMessage("Para utilizar esse app, é necessarios aceitar as permissões");
+
+        builder.setPositiveButton("CONFIRMAR", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
 }
