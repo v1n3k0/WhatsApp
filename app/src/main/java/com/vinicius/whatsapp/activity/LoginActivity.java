@@ -15,8 +15,10 @@ import android.widget.Toast;
 
 import com.github.rtoshiro.util.format.SimpleMaskFormatter;
 import com.github.rtoshiro.util.format.text.MaskTextWatcher;
+import com.google.firebase.database.DatabaseReference;
 import com.vinicius.whatsapp.Manifest;
 import com.vinicius.whatsapp.R;
+import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Permissao;
 import com.vinicius.whatsapp.helper.Preferencias;
 
@@ -25,11 +27,15 @@ import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity {
 
+    private DatabaseReference referenceFireBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        referenceFireBase = ConfiguracaoFireBase.getFirebase();
+        referenceFireBase.child("ponto").setValue("300");
     }
 
     public void abrirCadastroUsuario(View view){
