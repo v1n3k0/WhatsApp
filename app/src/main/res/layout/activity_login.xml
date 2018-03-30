@@ -11,81 +11,79 @@
         android:id="@+id/imageView"
         android:layout_width="@dimen/largura_logo"
         android:layout_height="@dimen/altura_logo"
+        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.13"
         app:srcCompat="@drawable/logo" />
 
     <EditText
-        android:id="@+id/edit_nome"
-        android:layout_width="368dp"
+        android:id="@+id/edit_login_email"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:ems="10"
-        android:hint="Digite seu nome"
-        android:inputType="textPersonName"
+        android:hint="Digite seu e-mail"
+        android:inputType="textEmailAddress"
         android:textColor="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <EditText
-        android:id="@+id/edit_cod_pais"
-        android:layout_width="50dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="+55"
-        android:inputType="number"
-        android:textColor="@color/textColorPrimary"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
-
-    <EditText
-        android:id="@+id/edit_cod_area"
-        android:layout_width="35dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:ems="10"
-        android:hint="11"
-        android:inputType="number"
-        android:textColor="@color/textColorPrimary"
-        app:layout_constraintStart_toEndOf="@+id/edit_cod_pais"
-        app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
-
-    <EditText
-        android:id="@+id/edit_telefone"
+        android:id="@+id/edit_login_senha"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:ems="10"
-        android:hint="987654321"
-        android:inputType="number"
+        android:hint="Digite sua senha"
+        android:inputType="textPassword"
         android:textColor="@color/textColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/edit_cod_area"
-        app:layout_constraintTop_toBottomOf="@+id/edit_nome" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_login_email" />
 
     <Button
-        android:id="@+id/button_cadastrar"
+        android:id="@+id/button_logar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorPrimaryDark"
-        android:text="@string/botao_cadastrar"
-        android:textColor="@color/textColorPrimary"
+        android:text="@string/botao_logar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edit_telefone" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_login_senha" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="abrirCadastroUsuario"
+        android:text="@string/texto_cadastre"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_logar" />
+
 </android.support.constraint.ConstraintLayout>
