@@ -83,9 +83,9 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(task.isSuccessful()){
                     abrirTelaPrincipal();
-                    Toast.makeText(LoginActivity.this, "Sucesso ao fazer login", Toast.LENGTH_LONG);
+                    Toast.makeText(LoginActivity.this, "Sucesso ao fazer login", Toast.LENGTH_LONG).show();
                 }else{
-                    Toast.makeText(LoginActivity.this, "Erro ao fazer login", Toast.LENGTH_LONG);
+                    Toast.makeText(LoginActivity.this, "Erro ao fazer login", Toast.LENGTH_LONG).show();
                 }
 
             }
