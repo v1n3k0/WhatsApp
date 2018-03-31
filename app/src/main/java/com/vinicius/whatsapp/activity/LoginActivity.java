@@ -27,15 +27,10 @@ import java.util.Random;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private DatabaseReference referenceFireBase;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        referenceFireBase = ConfiguracaoFireBase.getFirebase();
-        referenceFireBase.child("ponto").setValue("300");
     }
 
     public void abrirCadastroUsuario(View view){

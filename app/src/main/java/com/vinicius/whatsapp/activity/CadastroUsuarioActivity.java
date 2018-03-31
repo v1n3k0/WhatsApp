@@ -51,7 +51,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
     //Salva o usuario
     public void cadastrarUsuario(){
+
         autenticacao = ConfiguracaoFireBase.getFirebaseAutenticacao();
+
         autenticacao.createUserWithEmailAndPassword(
                 usuario.getEmail(),
                 usuario.getSenha()
