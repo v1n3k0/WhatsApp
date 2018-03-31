@@ -63,6 +63,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
         ).addOnCompleteListener(CadastroUsuarioActivity.this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
+
                 if(task.isSuccessful()){
                     Toast.makeText(CadastroUsuarioActivity.this, "Sucesso ao cadastrar usuário", Toast.LENGTH_LONG).show();
 
@@ -94,6 +95,7 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
                     Toast.makeText(CadastroUsuarioActivity.this, "Erro: " + erroExcecao, Toast.LENGTH_LONG).show();
                 }
+
             }
         });
     }
