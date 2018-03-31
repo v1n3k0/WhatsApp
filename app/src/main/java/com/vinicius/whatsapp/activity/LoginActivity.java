@@ -44,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        verificaUsuarioLogado();
+
         email = findViewById(R.id.edit_login_email);
         senha = findViewById(R.id.edit_login_senha);
         botaoLogar = findViewById(R.id.button_login_logar);
@@ -59,6 +61,15 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Verifica se usuario já esta logado no app
+    private void verificaUsuarioLogado(){
+        autenticacao = ConfiguracaoFireBase.getFirebaseAutenticacao();
+        if(autenticacao.getCurrentUser() != null){
+            abrirTelaPrincipal();
+        }
+    }
+
+    //Faz o login do usuario
     private void validaLogin(){
 
         autenticacao = ConfiguracaoFireBase.getFirebaseAutenticacao();
@@ -81,6 +92,7 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    //Abre a View principal
     private void abrirTelaPrincipal(){
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
