@@ -11,4 +11,8 @@
     <string name="hint_senha">Digite sua senha</string>
     <string name="img_addUsuario">Criar usuario</string>
     <string name="img_usuario">login</string>
+    <string name="action_settings">Configurações</string>
+    <string name="action_sair">Sair</string>
+    <string name="action_pesquisa">Pesquisar</string>
+    <string name="action_adiciona">Adicionar</string>
 </resources>
