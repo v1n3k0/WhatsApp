@@ -1,5 +1,6 @@
 package com.vinicius.whatsapp.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
+import com.vinicius.whatsapp.helper.Base64Custom;
 import com.vinicius.whatsapp.model.Usuario;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
@@ -69,12 +71,12 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
                     //Recupera id do usuario
                     FirebaseUser usuarioFirebase = task.getResult().getUser();
-                    usuario.setId(usuarioFirebase.getUid());
+
+                    String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+                    usuario.setId(identificadorUsuario );
                     usuario.salvar();
 
-                    //Deslogar usuario
-                    autenticacao.signOut();
-                    finish();
+                    abreLoginUsuario();
 
                 }else{
 
@@ -98,5 +100,11 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+
+    public void abreLoginUsuario(){
+        Intent intent = new Intent(CadastroUsuarioActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 }
