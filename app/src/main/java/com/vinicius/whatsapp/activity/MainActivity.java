@@ -1,6 +1,5 @@
 package com.vinicius.whatsapp.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.content.ContextCompat;
@@ -12,31 +11,38 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.vinicius.whatsapp.Adapter.TabAdapter;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
+import com.vinicius.whatsapp.helper.Base64Custom;
+import com.vinicius.whatsapp.helper.Preferencias;
 import com.vinicius.whatsapp.helper.SlidingTabLayout;
+import com.vinicius.whatsapp.model.Contato;
+import com.vinicius.whatsapp.model.Usuario;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FirebaseAuth autenticacao;
+    private FirebaseAuth usuarioFirebase;
     private Toolbar toolbar;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
+    private String identificadorContato;
+    private DatabaseReference firebase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        autenticacao = ConfiguracaoFireBase.getFirebaseAutenticacao();
+        usuarioFirebase = ConfiguracaoFireBase.getFirebaseAutenticacao();
 
         toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("WhatsApp");
@@ -84,20 +90,64 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void abreCadastroContato(){
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
 
         //Configurações do Dialog
         alertDialog.setTitle("Novo contato");
         alertDialog.setMessage("E-mail do usuário");
         alertDialog.setCancelable(false);
 
-        EditText editText = new EditText(MainActivity.this);
+        final EditText editText = new EditText(MainActivity.this);
         alertDialog.setView(editText);
 
         //Configurar botões
         alertDialog.setPositiveButton("Cadastrar", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                String emailContato = editText.getText().toString();
+
+                if(emailContato.isEmpty()){
+                    Toast.makeText(MainActivity.this, "Preencha o e-mail", Toast.LENGTH_LONG).show();
+                }else{
+                    identificadorContato = Base64Custom.codificarBase64(emailContato);
+                    firebase = ConfiguracaoFireBase.getFirebase().child("Usuarios").child(identificadorContato);
+
+                    firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if(dataSnapshot.getValue() != null){
+
+                                //Recuperar dados do contato a ser adicionado
+                                Usuario usuarioContato = dataSnapshot.getValue(Usuario.class);
+
+                                //Recuperar identificador usuario logado (base64)
+                                Preferencias preferencias = new Preferencias(MainActivity.this);
+                                String identificadorUsuarioLogado = preferencias.getIdentificador();
+
+                                firebase = ConfiguracaoFireBase.getFirebase();
+                                firebase = firebase.child("Contatos")
+                                        .child(identificadorUsuarioLogado)
+                                        .child(identificadorContato);
+
+                                Contato contato = new Contato();
+                                contato.setIdentificadorUsuario(identificadorContato);
+                                contato.setEmail(usuarioContato.getNome());
+                                contato.setNome(usuarioContato.getNome());
+
+                                firebase.setValue(contato);
+
+                            }else {
+                                Toast.makeText(MainActivity.this, "Usuário não possui cadastro", Toast.LENGTH_LONG).show();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+                }
 
             }
         });
@@ -115,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void deslogaUsuario(){
-        autenticacao.signOut();
+        usuarioFirebase.signOut();
         Intent intent = new Intent(MainActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();

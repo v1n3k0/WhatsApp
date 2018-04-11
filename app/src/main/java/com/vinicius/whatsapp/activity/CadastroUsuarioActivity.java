@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Base64Custom;
+import com.vinicius.whatsapp.helper.Preferencias;
 import com.vinicius.whatsapp.model.Usuario;
 
 public class CadastroUsuarioActivity extends AppCompatActivity {
@@ -75,6 +76,9 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                     String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
                     usuario.setId(identificadorUsuario );
                     usuario.salvar();
+
+                    Preferencias preferencias = new Preferencias(CadastroUsuarioActivity.this);
+                    preferencias.salvarDados(identificadorUsuario);
 
                     abreLoginUsuario();
 

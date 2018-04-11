@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.vinicius.whatsapp.Manifest;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
+import com.vinicius.whatsapp.helper.Base64Custom;
 import com.vinicius.whatsapp.helper.Permissao;
 import com.vinicius.whatsapp.helper.Preferencias;
 import com.vinicius.whatsapp.model.Usuario;
@@ -82,6 +83,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if(task.isSuccessful()){
+
+                    Preferencias preferencias = new Preferencias(LoginActivity.this);
+                    String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+                    preferencias.salvarDados(identificadorUsuario);
+
                     abrirTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao fazer login", Toast.LENGTH_LONG).show();
                 }else{
