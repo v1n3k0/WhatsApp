@@ -13,6 +13,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+import com.vinicius.whatsapp.Adapter.ContatoAdapter;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Preferencias;
@@ -27,7 +28,7 @@ public class ContatosFragment extends Fragment {
 
     private ListView listView;
     private ArrayAdapter adapter;
-    private ArrayList<String> contatos;
+    private ArrayList<Contato> contatos;
     private DatabaseReference firebase;
     private ValueEventListener valueEventListenerContatos;
 
@@ -61,13 +62,15 @@ public class ContatosFragment extends Fragment {
 
         //Monta listView e adapter
         listView = view.findViewById(R.id.lv_contatos);
-        adapter = new ArrayAdapter(
+        /*adapter = new ArrayAdapter(
                 getActivity(),
                 R.layout.lista_contato,
                 contatos
-        );
+        );*/
+        adapter = new ContatoAdapter(getActivity(), contatos);
         listView.setAdapter(adapter);
 
+        //Recuperar contatos do firebase
         Preferencias preferencias = new Preferencias(getActivity());
         String identificadorUsuarioLogado = preferencias.getIdentificador();
         firebase = ConfiguracaoFireBase.getFirebase()
@@ -86,7 +89,7 @@ public class ContatosFragment extends Fragment {
                 for (DataSnapshot dado: dataSnapshot.getChildren()){
 
                     Contato contato = dado.getValue(Contato.class);
-                    contatos.add(contato.getNome());
+                    contatos.add(contato);
 
                 }
 

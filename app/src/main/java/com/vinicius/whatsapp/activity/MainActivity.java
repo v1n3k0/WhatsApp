@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
                                 Contato contato = new Contato();
                                 contato.setIdentificadorUsuario(identificadorContato);
-                                contato.setEmail(usuarioContato.getNome());
+                                contato.setEmail(usuarioContato.getEmail());
                                 contato.setNome(usuarioContato.getNome());
 
                                 firebase.setValue(contato);
