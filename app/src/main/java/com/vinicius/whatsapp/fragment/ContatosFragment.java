@@ -29,11 +29,25 @@ public class ContatosFragment extends Fragment {
     private ArrayAdapter adapter;
     private ArrayList<String> contatos;
     private DatabaseReference firebase;
+    private ValueEventListener valueEventListenerContatos;
 
     public ContatosFragment() {
         // Required empty public constructor
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        firebase.addValueEventListener(valueEventListenerContatos);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        firebase.removeEventListener(valueEventListenerContatos);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,7 +75,7 @@ public class ContatosFragment extends Fragment {
                 .child(identificadorUsuarioLogado);
 
         //Listener para recuperar contatos
-        firebase.addValueEventListener(new ValueEventListener() {
+        valueEventListenerContatos = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -83,7 +97,7 @@ public class ContatosFragment extends Fragment {
             public void onCancelled(DatabaseError databaseError) {
 
             }
-        });
+        };
 
         return view;
     }
