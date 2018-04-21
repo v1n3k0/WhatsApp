@@ -1,11 +1,13 @@
 package com.vinicius.whatsapp.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -15,6 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.vinicius.whatsapp.Adapter.ContatoAdapter;
 import com.vinicius.whatsapp.R;
+import com.vinicius.whatsapp.activity.ConversaActivity;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Preferencias;
 import com.vinicius.whatsapp.model.Contato;
@@ -101,6 +104,16 @@ public class ContatosFragment extends Fragment {
 
             }
         };
+
+        //Ação ao selecionar item da lista
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent intent = new Intent(getActivity(), ConversaActivity.class);
+                startActivity(intent);
+            }
+        });
 
         return view;
     }

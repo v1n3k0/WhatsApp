@@ -70,9 +70,6 @@ public class CadastroUsuarioActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     Toast.makeText(CadastroUsuarioActivity.this, "Sucesso ao cadastrar usuário", Toast.LENGTH_LONG).show();
 
-                    //Recupera id do usuario
-                    FirebaseUser usuarioFirebase = task.getResult().getUser();
-
                     String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
                     usuario.setId(identificadorUsuario );
                     usuario.salvar();
