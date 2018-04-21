@@ -1,6 +1,8 @@
 package com.vinicius.whatsapp.model;
 
-public class Contato {
+import java.io.Serializable;
+
+public class Contato implements Serializable{
 
     private String identificadorUsuario;
     private String nome;
