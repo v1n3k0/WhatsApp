@@ -1,4 +1,4 @@
-package com.vinicius.whatsapp.Adapter;
+package com.vinicius.whatsapp.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -13,7 +13,6 @@ import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.model.Contato;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContatoAdapter extends ArrayAdapter<Contato>{
 

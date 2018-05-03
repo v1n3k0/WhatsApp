@@ -19,7 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
-import com.vinicius.whatsapp.Adapter.TabAdapter;
+import com.vinicius.whatsapp.adapter.TabAdapter;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Base64Custom;

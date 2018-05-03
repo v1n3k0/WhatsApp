@@ -1,4 +1,4 @@
-package com.vinicius.whatsapp.Adapter;
+package com.vinicius.whatsapp.adapter;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
