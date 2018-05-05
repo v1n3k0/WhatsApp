@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 import com.vinicius.whatsapp.R;
+import com.vinicius.whatsapp.adapter.MensagemAdapter;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
 import com.vinicius.whatsapp.helper.Base64Custom;
 import com.vinicius.whatsapp.helper.Preferencias;
@@ -32,8 +33,8 @@ public class ConversaActivity extends AppCompatActivity {
     private ImageButton btMensagem;
     private DatabaseReference firebase;
     private ListView listView;
-    private ArrayList<String> mensagens;
-    private ArrayAdapter adapter;
+    private ArrayList<Mensagem> mensagens;
+    private ArrayAdapter <Mensagem> adapter;
     private ValueEventListener valueEventListenerMensagem;
 
     //dados do destinatario
@@ -72,16 +73,12 @@ public class ConversaActivity extends AppCompatActivity {
 
         //Monta listView e adapter
         mensagens = new ArrayList<>();
-        adapter = new ArrayAdapter(
-                ConversaActivity.this,
-                android.R.layout.simple_list_item_1,
-                mensagens
-        );
+        adapter = new MensagemAdapter(ConversaActivity.this, mensagens);
         listView.setAdapter(adapter);
 
         //Recuperar mensagens do firebase
         firebase = ConfiguracaoFireBase.getFirebase()
-                .child("Mensagem")
+                .child("Mensagens")
                 .child(idUsuarioRemetente)
                 .child(idUsuarioDestinatario);
 
@@ -94,7 +91,7 @@ public class ConversaActivity extends AppCompatActivity {
                 //recuperara mensagem
                 for( DataSnapshot dados: dataSnapshot.getChildren()){
                     Mensagem mensagem = dados.getValue(Mensagem.class);
-                    mensagens.add(mensagem.getMensagem());
+                    mensagens.add(mensagem);
                 }
 
                 adapter.notifyDataSetChanged();
@@ -135,7 +132,7 @@ public class ConversaActivity extends AppCompatActivity {
     private boolean salvaMensagem(String idDestinatario, Mensagem mensagem){
         try{
 
-            firebase = ConfiguracaoFireBase.getFirebase().child("Mensagem");
+            firebase = ConfiguracaoFireBase.getFirebase().child("Mensagens");
 
             firebase.child(mensagem.getIdUsuario())
                     .child(idDestinatario)
