@@ -120,7 +120,11 @@ public class ConversaActivity extends AppCompatActivity {
                     mensagem.setIdUsuario(idUsuarioRemetente);
                     mensagem.setMensagem(textoMensagem);
 
-                    salvaMensagem(idUsuarioDestinatario, mensagem);
+                    //Salvar mensagem para remetente
+                    salvaMensagem(idUsuarioDestinatario, idUsuarioRemetente, mensagem);
+
+                    //Salvar mensagem para destinatario
+                    salvaMensagem(idUsuarioRemetente, idUsuarioDestinatario, mensagem);
 
                     editMensagem.setText("");
                 }
@@ -129,12 +133,12 @@ public class ConversaActivity extends AppCompatActivity {
 
     }
 
-    private boolean salvaMensagem(String idDestinatario, Mensagem mensagem){
+    private boolean salvaMensagem(String idDestinatario, String idUsuarioRemetente, Mensagem mensagem){
         try{
 
             firebase = ConfiguracaoFireBase.getFirebase().child("Mensagens");
 
-            firebase.child(mensagem.getIdUsuario())
+            firebase.child(idUsuarioRemetente)
                     .child(idDestinatario)
                     .push()
                     .setValue(mensagem);
