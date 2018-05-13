@@ -21,7 +21,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 import com.vinicius.whatsapp.Manifest;
 import com.vinicius.whatsapp.R;
 import com.vinicius.whatsapp.config.ConfiguracaoFireBase;
@@ -41,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
     private Usuario usuario;
     private FirebaseAuth autenticacao;
     private ProgressBar progressBar;
+    private DatabaseReference firebase;
+    private ValueEventListener valueEventListenerUsuario;
+    private String identificadorUsuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,8 +98,28 @@ public class LoginActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
 
                     Preferencias preferencias = new Preferencias(LoginActivity.this);
-                    String identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
-                    preferencias.salvarDados(identificadorUsuario);
+                    identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
+
+                    firebase = ConfiguracaoFireBase.getFirebase()
+                            .child("Usuarios")
+                            .child(identificadorUsuario);
+
+                    valueEventListenerUsuario  = new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+
+                            Usuario usuarioRecuperado = dataSnapshot.getValue(Usuario.class);
+
+                            Preferencias preferencias = new Preferencias(LoginActivity.this);
+                            preferencias.salvarDados(identificadorUsuario, usuarioRecuperado.getNome());
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    };
+                    firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
 
                     abrirTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao fazer login", Toast.LENGTH_LONG).show();
