@@ -97,7 +97,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 if(task.isSuccessful()){
 
-                    Preferencias preferencias = new Preferencias(LoginActivity.this);
+                    //Preferencias preferencias = new Preferencias(LoginActivity.this);
                     identificadorUsuario = Base64Custom.codificarBase64(usuario.getEmail());
 
                     firebase = ConfiguracaoFireBase.getFirebase()
@@ -112,6 +112,8 @@ public class LoginActivity extends AppCompatActivity {
 
                             Preferencias preferencias = new Preferencias(LoginActivity.this);
                             preferencias.salvarDados(identificadorUsuario, usuarioRecuperado.getNome());
+
+                            abrirTelaPrincipal();
                         }
 
                         @Override
@@ -121,7 +123,7 @@ public class LoginActivity extends AppCompatActivity {
                     };
                     firebase.addListenerForSingleValueEvent(valueEventListenerUsuario);
 
-                    abrirTelaPrincipal();
+                    //abrirTelaPrincipal();
                     Toast.makeText(LoginActivity.this, "Sucesso ao fazer login", Toast.LENGTH_LONG).show();
                 }else{
                     Toast.makeText(LoginActivity.this, "Erro ao fazer login", Toast.LENGTH_LONG).show();

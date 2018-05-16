@@ -139,8 +139,8 @@ public class ConversaActivity extends AppCompatActivity {
 
                     //Salvar Conversa para remtente
                     Conversa conversa = new Conversa();
-                    conversa.setIdUsuario(idUsuarioDestinatario);
-                    conversa.setNome(nomeUsuarioDestinatario);
+                    conversa.setIdUsuario(idUsuarioRemetente);
+                    conversa.setNome(nomeUsuarioRemetente);
                     conversa.setMensagem(textoMensagem);
                     Boolean retornoConversaRemetente = salvaConversa(idUsuarioRemetente, idUsuarioDestinatario, conversa);
 
@@ -149,8 +149,8 @@ public class ConversaActivity extends AppCompatActivity {
                     }else{
                         //Salvar Conversa para destinatario
                         conversa = new Conversa();
-                        conversa.setIdUsuario(idUsuarioRemetente);
-                        conversa.setNome(nomeUsuarioRemetente);
+                        conversa.setIdUsuario(idUsuarioDestinatario);
+                        conversa.setNome(nomeUsuarioDestinatario);
                         conversa.setMensagem(textoMensagem);
                         Boolean retornoConversaDestinatario = salvaConversa(idUsuarioDestinatario, idUsuarioRemetente, conversa);
 
