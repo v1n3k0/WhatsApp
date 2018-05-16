@@ -6,7 +6,7 @@
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
         android:text="Vinicius"
-        android:id="@+id/tv_nome"
+        android:id="@+id/tv_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/black"
@@ -16,7 +16,7 @@
         android:paddingRight="8dp"/>
 
     <TextView
-        android:id="@+id/tv_email"
+        android:id="@+id/tv_subtitulo"
         android:text="vinicius@email.com"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

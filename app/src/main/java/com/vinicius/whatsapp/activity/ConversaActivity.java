@@ -67,6 +67,7 @@ public class ConversaActivity extends AppCompatActivity {
         if(i != null){
             contato = (Contato) i.getSerializableExtra("contato");
             idUsuarioDestinatario = Base64Custom.codificarBase64(contato.getEmail());
+            nomeUsuarioDestinatario = contato.getNome();
         }
 
         //Configurar toolbar
